@@ -391,7 +391,7 @@ willianna.skill.append(s)
 willianna.skill.append(YuiSkill('射擊'))
 
 lyuda = YuiAgent('琉塔', hp=100, atk=20, df=12)
-s = YuiSkill('專注', target='self', dmg=0, cd=5)
+s = YuiSkill('瞄準', target='self', dmg=0, cd=5)
 s.debuff = YuiBuff('瞄準', '暴擊', 30, last=3)
 s.cost = 0
 lyuda.skill.append(s)
