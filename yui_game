@@ -54,6 +54,7 @@ class YuiAgent:
     def summon(self, s):
         self.summon_monster.append(s)
         s.master = self
+        s.team = self.team
 
     def use_skill(self, skill, t1, t2):
         for s in skill:
@@ -139,7 +140,27 @@ class YuiAgent:
 
             if s.dmg == 0 and s.name != '血怒':
             #if s.dmg == 0 and s.name != '血迷い':
-                battle_disp(self.name + '使用' + s.name, self.team)
+                if s.name == '真狼形態':
+                    battle_disp('月夜降臨，斯特勒魯卡化身真狼形態', self.team)
+                    if self.team == 1:
+                        icon_choose = icons
+                        name_choose = names
+                    else:
+                        icon_choose = icons3
+                        name_choose = names3
+                    for i, icon in enumerate(icon_choose):
+                        if name_choose[i]['text'].startswith('斯特勒魯卡'):
+                            icons[i].config(image=images['真狼'])
+                            break
+                    battle_disp('斯特勒魯卡的生命力恢復了，攻擊力提高', self.team)
+                    self.hp_now = self.hp
+                    self.atk += 5
+                    del self.skill[1]
+                    del self.skill[1]
+                    self.skill.append(skill_wolf)
+                    self.skill.append(skill_wolf2)
+                else:
+                    battle_disp(self.name + '使用' + s.name, self.team)
                 #battle_disp(self.name + 'が' + s.name + 'を使った', self.team)
             for orb in orbs:
                 if orb.evade and s.name != '死亡宣告':
@@ -182,7 +203,7 @@ class YuiAgent:
                             curse += self.hp_now
                             self.hp_now = 0
                         orb.dps += curse
-                        update_hp_text(self, team)
+                        update_hp_text(self)
                         if self.hp_now == 0:
                             self.use_skill(orb.dead, t2, t1)
                             battle_disp(self.name + '死掉了', self.team)
@@ -586,6 +607,15 @@ neferti.skill.append(YuiSkill('拋石車', dmg=20, cd=2, r=2))
 neferti.skill.append(YuiSkill('墜石', dmg=15, cd=1))
 neferti.skill.append(YuiSkill('彈弓射擊'))
 
+strelka = YuiAgent('斯特勒魯卡', hp=100, atk=15, df=12)
+s = YuiSkill('真狼形態', dmg=0, cd=inf, target='self')
+s.cd_now = 5
+strelka.skill.append(s)
+strelka.skill.append(YuiSkill('凱撒爪', dmg=15))
+strelka.skill.append(YuiSkill('猛獸踢', dmg=20, cd=1))
+skill_wolf = YuiSkill('凱撒爪', dmg=20, r=2, cd=1)
+skill_wolf2 = YuiSkill('嗜血撕咬', dmg=20)
+
 dominion = YuiAgent('多米妮安', hp=100, atk=20, df=15)
 s = YuiSkill('驅散', dmg=0, target='friend', r=2, cd=2)
 dominion.skill.append(s)
@@ -763,6 +793,7 @@ tambora.passive.append(s)
 def add_summon(t):
     for mem in t:
         for s in mem.summon_monster:
+            s.team = mem.team
             t.append(s)
 
 
@@ -775,7 +806,7 @@ window.geometry('1000x620')
 
 all_hero = {'貝羅斯': belos, '塞萊茜布': celexib, '蕾吉娜': regina, '喬恩': donnet, '艾莉安': elion,
             '薇莉安娜': willianna, '琉塔': lyuda, '哈拉爾德': harald, '瑪格麗特': margrete, '歐若拉': aurora,
-            '莉布絲':libuse, '奈菲提': neferti, '伊利亞': elijah, '多米妮安': dominion, '莉姬亞': ligeia,
+            '莉布絲':libuse, '奈菲提': neferti, '伊利亞': elijah, '斯特勒魯卡': strelka,'多米妮安': dominion, '莉姬亞': ligeia,
             '西里烏斯': sirius, '少爺': bouya, '卡伊達': kaeda, '阿蒂雅': adeak, '黃泉引路人': way_guider,
             '安朵蕾雅絲': andreas, '船長格林威治': greenwich,
             '哈密特': hammett, '克維德': covid,
@@ -948,8 +979,10 @@ images = {
     "瑪格麗特": load_image(yui_dir + "瑪格麗特.png"),
     "歐若拉": load_image(yui_dir + "歐若拉.png"),
     "莉布絲": load_image(yui_dir + "莉布絲.png"),
-    "奈菲提": load_image(yui_dir + "奈菲提.png"),
     "伊利亞": load_image(yui_dir + "伊利亞.png"),
+    "奈菲提": load_image(yui_dir + "奈菲提.png"),
+    "斯特勒魯卡": load_image(yui_dir + "斯特勒魯卡.png"),
+    "真狼": load_image(yui_dir + "真狼.png"),
     "多米妮安": load_image(yui_dir + "多米妮安.png"),
     "莉姬亞": load_image(yui_dir + "莉姬亞.png"),
     "西里烏斯": load_image(yui_dir + "西里烏斯.png"),
@@ -1166,6 +1199,7 @@ for i, m in enumerate(menu_all):
     m.add_command(label="莉布絲（死靈法師，傷害輸出）", command=lambda i=i: hero('莉布絲', i))
     m.add_command(label="伊利亞（煉金術師，輔助/傷害輸出）", command=lambda i=i: hero('伊利亞', i))
     m.add_command(label="奈菲提（法師，輔助/傷害輸出）", command=lambda i=i: hero('奈菲提', i))
+    m.add_command(label="斯特勒魯卡（鬥士，傷害輸出）", command=lambda i=i: hero('斯特勒魯卡', i))
     m.add_command(label="多米妮安（牧師，治療/輔助）", command=lambda i=i: hero('多米妮安', i))
     m.add_command(label="莉姬亞（刺客，傷害輸出）", command=lambda i=i: hero('莉姬亞', i))
     '''
@@ -1181,6 +1215,7 @@ for i, m in enumerate(menu_all):
     menu.add_command(label="リブシェ（呪術師，支援/火力）", command=lambda: hero('莉布絲', 0))
     menu.add_command(label="イライジャ（錬金術師，支援/火力）", command=lambda: hero('伊利亞', 0))
     menu.add_command(label="ネフェルティ（術師，支援/火力）", command=lambda: hero('奈菲提', 0))
+    menu.add_command(label="ストレルカ（闘士，火力）", command=lambda: hero('斯特勒魯卡', 0))
     menu.add_command(label="ドミニオン（聖職者，治療/支援）", command=lambda: hero('多米妮安', 0))
     menu.add_command(label="ライジーア（暗殺者，火力）", command=lambda: hero('莉姬亞', 0))
     '''
@@ -1383,8 +1418,10 @@ class YuiStart(threading.Thread):
         global ongoing, t1, t2, t3
         if check_mode.mode.get() == 1:  # pve
             mode_now = 'pve'
+            strelka.skill[0].cd_now = 5
         else:
             mode_now = 'pvp'
+            strelka.skill[0].cd_now = 3
         stat = {}
         stat2 = {}
         result = ''
@@ -1424,11 +1461,13 @@ class YuiStart(threading.Thread):
             add_summon(t2_tmp)
 
             #for a in t1_tmp:
-             #   a.hp = int(a.hp * 100)
-              #  a.hp_now = int(a.hp_now * 100)
+            #    a.hp = int(a.hp * 100)
+            #    a.hp_now = int(a.hp_now * 100)
             #for a in t2_tmp:
-             #   a.hp = int(a.hp * 10)
-              #  a.hp_now = int(a.hp_now * 10)
+            #    a.hp = int(a.hp * 10)
+            #    a.hp_now = int(a.hp_now * 10)
+            #max_count = inf
+
             if mode_now == 'pvp':
                 for a in t1_tmp:
                     a.hp = int(a.hp * 2)
