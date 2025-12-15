@@ -150,7 +150,7 @@ class YuiAgent:
                         name_choose = names3
                     for i, icon in enumerate(icon_choose):
                         if name_choose[i]['text'].startswith('斯特勒魯卡'):
-                            icons[i].config(image=images['真狼'])
+                            icon_choose[i].config(image=images['真狼'])
                             break
                     battle_disp('斯特勒魯卡的生命力恢復了，攻擊力提高', self.team)
                     self.hp_now = self.hp
@@ -1442,7 +1442,10 @@ class YuiStart(threading.Thread):
                     stat2[t2[0]] = {'戰': 0, '勝': 0, '敗': 0, '超時': 0, '勝率': 0, '超時率': 0}
 
             update_display(t1)
-            update_display2(t2)
+            if mode_now == 'pve':
+                update_display2(t2)
+            else:
+                update_display(t3, 3)
             t1_tmp = [copy.deepcopy(all_hero[x]) for x in t1 if x]
             for a in t1_tmp:
                 a.team = 1
