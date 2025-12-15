@@ -37,6 +37,7 @@
 歐若拉（聖騎士，治療/輔助）
 莉布絲（死靈法師，傷害輸出）
 奈菲提（法師，輔助/傷害輸出）
+斯特勒魯卡（鬥士，傷害輸出）
 伊利亞（煉金術師，輔助/傷害輸出）
 莉姬亞（刺客，傷害輸出）
 
@@ -90,6 +91,9 @@ BOSS：
 
 奈菲提
 <img width="774" height="562" alt="image" src="https://github.com/user-attachments/assets/cdf83245-d547-4cb8-bcfc-b73c5becd31f" />
+
+斯特勒魯卡
+<img width="1020" height="1020" alt="image" src="https://github.com/user-attachments/assets/a26fcc75-a37c-4a86-aa43-1f93db27ebcc" />
 
 多米妮安
 <img width="772" height="510" alt="image" src="https://github.com/user-attachments/assets/3d4b95c6-8e6d-47fe-979d-ef8b57dafd7e" />
