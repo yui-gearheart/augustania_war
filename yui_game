@@ -6,7 +6,7 @@ import random
 import time
 from decimal import *
 
-yui_dir = 'game_data/'
+yui_dir = 'D:\game_data/'
 
 
 def target_chose(team, mode='min'):
@@ -281,7 +281,7 @@ class YuiAgent:
                     if self.hp_now > self.hp:
                         dmg = dmg - self.hp_now + self.hp
                         self.hp_now = self.hp
-                    update_hp_text(self, team)
+                    update_hp_text(self)
 
                     source = d.source
                     source.heal += dmg
@@ -568,14 +568,6 @@ libuse.skill.append(YuiSummon('下咒', cd=3, summon=doll))
 libuse.skill.append(YuiSkill('靈魂爆破', dmg=20, cd=2, r=2))
 libuse.skill.append(YuiSkill('杖擊'))
 
-neferti = YuiAgent('奈菲提', hp=100, atk=15, df=12)
-s = YuiSkill('戰壕挖掘', dmg=0, cd=4, r=3, target='friend')
-s.debuff = YuiBuff('掩護', '防禦力', 4, 2)
-neferti.skill.append(s)
-neferti.skill.append(YuiSkill('拋石車', dmg=20, cd=2, r=2))
-neferti.skill.append(YuiSkill('墜石', dmg=15, cd=1))
-neferti.skill.append(YuiSkill('彈弓射擊'))
-
 elijah = YuiAgent('伊利亞', hp=100, atk=15, df=12)
 s = YuiSkill('麻醉', dmg=0, cd=3, r=3)
 s.debuff = YuiDebuff('走神', '暴擊', 30, 2)
@@ -585,6 +577,14 @@ s.debuff = YuiDebuff('燃燒', '傷害', 5, last=3)
 elijah.skill.append(s)
 elijah.skill.append(YuiSkill('重鉻酸洗液', dmg=20, cd=1, r=2))
 elijah.skill.append(YuiSkill('杖擊'))
+
+neferti = YuiAgent('奈菲提', hp=100, atk=15, df=12)
+s = YuiSkill('戰壕挖掘', dmg=0, cd=4, r=3, target='friend')
+s.debuff = YuiBuff('掩護', '防禦力', 4, last=2)
+neferti.skill.append(s)
+neferti.skill.append(YuiSkill('拋石車', dmg=20, cd=2, r=2))
+neferti.skill.append(YuiSkill('墜石', dmg=15, cd=1))
+neferti.skill.append(YuiSkill('彈弓射擊'))
 
 dominion = YuiAgent('多米妮安', hp=100, atk=20, df=15)
 s = YuiSkill('驅散', dmg=0, target='friend', r=2, cd=2)
@@ -646,7 +646,7 @@ s.debuff = YuiBuff('隱身', '迴避', last=2)
 shadow.skill.append(s)
 shadow.skill.append(YuiSkill('劈砍'))
 bouya.skill.append(YuiSummon('影分身', cd=4, summon=shadow, num=4))
-bouya.skill.append(YuiSkill('劈砍'))
+bouya.skill.append(YuiSkill('苦无投掷'))
 
 kaeda = YuiAgent('卡伊達', hp=1000, atk=15, df=15)
 bomb = YuiAgent('炸彈', hp=1, atk=15, df=15)
@@ -736,7 +736,7 @@ bone_dragon.hate = -1
 s = YuiSummon('召喚骨龍', cd=inf, summon=bone_dragon)
 s.cond = 50
 prospero.skill.append(s)
-s = YuiSkill('鼓舞', dmg=0, cd=3, r=3, target='friend')
+s = YuiSkill('鼓舞', dmg=0, cd=4, r=3, target='friend')
 s.debuff = YuiBuff('鼓舞', '攻擊力', 5, last=3)
 prospero.skill.append(s)
 s = YuiSkill('不死光環', dmg=0, cd=4, r=3, target='friend')
@@ -1164,8 +1164,8 @@ for i, m in enumerate(menu_all):
     m.add_command(label="瑪格麗特（弓箭手，治療/傷害輸出）", command=lambda i=i: hero('瑪格麗特', i))
     m.add_command(label="歐若拉（聖騎士，治療/輔助）", command=lambda i=i: hero('歐若拉', i))
     m.add_command(label="莉布絲（死靈法師，傷害輸出）", command=lambda i=i: hero('莉布絲', i))
-    m.add_command(label="奈菲提（法師，輔助/傷害輸出）", command=lambda i=i: hero('奈菲提', i))
     m.add_command(label="伊利亞（煉金術師，輔助/傷害輸出）", command=lambda i=i: hero('伊利亞', i))
+    m.add_command(label="奈菲提（法師，輔助/傷害輸出）", command=lambda i=i: hero('奈菲提', i))
     m.add_command(label="多米妮安（牧師，治療/輔助）", command=lambda i=i: hero('多米妮安', i))
     m.add_command(label="莉姬亞（刺客，傷害輸出）", command=lambda i=i: hero('莉姬亞', i))
     '''
@@ -1179,8 +1179,8 @@ for i, m in enumerate(menu_all):
     menu.add_command(label="マルグレーテ（弓使い，治療/火力）", command=lambda: hero('瑪格麗特', 0))
     menu.add_command(label="オーロラ（聖騎士，治療/支援）", command=lambda: hero('歐若拉', 0))
     menu.add_command(label="リブシェ（呪術師，支援/火力）", command=lambda: hero('莉布絲', 0))
-    menu.add_command(label="ネフェルティ（術師，支援/火力）", command=lambda: hero('奈菲提', 0))
     menu.add_command(label="イライジャ（錬金術師，支援/火力）", command=lambda: hero('伊利亞', 0))
+    menu.add_command(label="ネフェルティ（術師，支援/火力）", command=lambda: hero('奈菲提', 0))
     menu.add_command(label="ドミニオン（聖職者，治療/支援）", command=lambda: hero('多米妮安', 0))
     menu.add_command(label="ライジーア（暗殺者，火力）", command=lambda: hero('莉姬亞', 0))
     '''
@@ -1309,7 +1309,6 @@ def pvp():
 lock = threading.Lock()
 
 cd_var = tk.IntVar(value=2)
-cd = 1
 
 tk.Radiobutton(window, text="慢速遊戲", variable=cd_var, value=2).place(x=810, y=220)
 tk.Radiobutton(window, text="快速遊戲", variable=cd_var, value=1).place(x=810, y=250)
@@ -1328,11 +1327,13 @@ class CheckMode(threading.Thread):
 
     def run(self):
         while 1:
+            time.sleep(0.1)
+            if ongoing:
+                continue
             if self.mode.get() == 1:
                 pve()
             else:
                 pvp()
-            time.sleep(0.1)
 
 
 check_mode = CheckMode()
@@ -1344,6 +1345,7 @@ tk.Radiobutton(window, text="玩家對戰", variable=check_mode.mode, value=0).p
 
 def battle_disp(v, team=4):
     if v:
+        cd = cd_var.get() * 0.5
         time.sleep(cd)
     if team == 1:
         yui_discourse.insert('end', v, 't1')
@@ -1637,7 +1639,6 @@ def start_battle():
                 battle_disp('系統消息：請選擇至少一名英雄')
                 battle_disp('')
             else:
-                cd = cd_var.get()/2
                 yui_discourse.delete("1.0", tk.END)
                 yui_start = YuiStart()
                 ongoing.append(yui_start)
@@ -1654,7 +1655,7 @@ def stop_battle():
 b1 = tk.Button(window, text='開始戰鬥', font=('Arial', 12), width=10, height=1, command=start_battle)
 #b1 = tk.Button(window, text='戦闘開始', font=('Arial', 12), width=10, height=1, command=start_battle)
 b1.pack()
-b1.place(x=400, y=370)
+b1.place(x=410, y=370)
 
 b1 = tk.Button(window, text='停止戰鬥', font=('Arial', 12), width=10, height=1, command=stop_battle)
 #b1 = tk.Button(window, text='戦闘中止', font=('Arial', 12), width=10, height=1, command=start_battle)
@@ -1662,16 +1663,24 @@ b1.pack()
 b1.place(x=530, y=370)
 
 
-def random_team():
-    global t1, t3
-    t1 = random.sample(hero_t, 1) + random.sample(hero_heal, 1) + random.sample(hero_dps, 3)
-    t3 = random.sample(hero_t, 1) + random.sample(hero_heal, 1) + random.sample(hero_dps, 3)
+def random_team1():
+    global t1
+    t1 = random.sample(hero_t + hero_heal + hero_dps, 5)
     update_display(t1)
+
+
+def random_team2():
+    global t3
+    t3 = random.sample(hero_t + hero_heal + hero_dps, 5)
     update_display(t3, 3)
 
 
-b3 = tk.Button(window, text='隨機生成隊伍', font=('Arial', 12), width=10, height=1, command=random_team)
+b3 = tk.Button(window, text='隨機生成隊伍2', font=('Arial', 12), width=12, height=1, command=random_team2)
 b3.pack()
 b3.place(x=280, y=370)
+
+b4 = tk.Button(window, text='隨機生成隊伍1', font=('Arial', 12), width=12, height=1, command=random_team1)
+b4.pack()
+b4.place(x=150, y=370)
 
 window.mainloop()
