@@ -1392,7 +1392,7 @@ def battle_disp(v, team=4):
     yui_discourse.see('end')
 
 
-hero_dps = ['蕾吉娜', '喬恩', '薇莉安娜', '琉塔', '瑪格麗特', '伊利亞', '莉姬亞', '奈菲提', '莉布絲']
+hero_dps = ['蕾吉娜', '喬恩', '薇莉安娜', '琉塔', '瑪格麗特', '伊利亞', '莉姬亞', '奈菲提', '莉布絲', '斯特勒魯卡']
 hero_t = ['貝羅斯', '哈拉爾德']
 hero_heal = ['塞萊茜布', '歐若拉', '多米妮安']
 boss = ['西里烏斯', '少爺', '卡伊達', '黃泉引路人', '安朵蕾雅絲', '船長格林威治', '哈密特', '克維德', '普羅斯佩羅', '坦博拉']
@@ -1421,7 +1421,7 @@ class YuiStart(threading.Thread):
             strelka.skill[0].cd_now = 5
         else:
             mode_now = 'pvp'
-            strelka.skill[0].cd_now = 3
+            strelka.skill[0].cd_now = 2
         stat = {}
         stat2 = {}
         result = ''
