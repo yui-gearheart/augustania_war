@@ -1,3 +1,4 @@
+
 import tkinter as tk
 from PIL import Image, ImageTk
 import threading
@@ -6,7 +7,7 @@ import random
 import time
 from decimal import *
 
-yui_dir = 'game_data/'
+yui_dir = 'D:/game_data/'
 
 
 def target_chose(team, mode='min'):
@@ -106,8 +107,11 @@ class YuiAgent:
                     t_chose = [x for x in t1 if x.hp_now > 0 and x.name != '詛咒人偶']
                     ind = list(range(len(t_chose)))
             elif s.name == '傷害轉移':
-                orbs = [self.orb]
-                ind = [0]
+                if self.orb.hp_now > 0:
+                    orbs = [self.orb]
+                    ind = [0]
+                else:
+                    ind = []
             else:
                 if s.range == 3:  # 全體技能
                     orbs = [x for x in t2 if x.hp_now > 0]
@@ -795,7 +799,7 @@ s = YuiSkill('血怒', target='self', dmg=0)
 s.debuff = YuiBuff('血怒', '攻擊力', 1, last=2)
 tambora.passive.append(s)
 
-doudaiev = YuiAgent('杜達耶夫', hp=1600, atk=20, df=15)
+doudaiev = YuiAgent('杜達耶夫', hp=1800, atk=20, df=15)
 blizzard = YuiAgent('暴風雪', hp=1, atk=10, df=0)
 s = YuiSkill('吹襲', r=3, cd=3)
 s.debuff = YuiDebuff('凍僵', '速度', 30, last=2)
@@ -803,7 +807,7 @@ blizzard.skill.append(s)
 s = YuiSummon('呼風喚雪', cd=inf, summon=blizzard)
 s.is_env = True
 doudaiev.skill.append(s)
-s = YuiSkill('絕對零度', dmg=30, cd=inf, r=3)
+s = YuiSkill('絕對零度', dmg=25, cd=inf, r=3)
 s.cond = 50
 s.debuff = YuiDebuff('凍結', last=1)
 doudaiev.skill.append(s)
