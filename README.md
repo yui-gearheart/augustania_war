@@ -54,6 +54,7 @@ BOSS：
 普羅斯佩羅(增益型）
 坦博拉（狂戰士型）
 杜達耶夫（控制型）
+聖王·貝羅斯（坦克型）
 
 英雄介紹：
 
@@ -138,6 +139,8 @@ BOSS介紹：
 杜達耶夫
 <img width="740" height="852" alt="image" src="https://github.com/user-attachments/assets/0dbb3659-6eaa-464b-af00-47413c299ce1" />
 
+聖王·貝羅斯
+<img width="1006" height="1058" alt="image" src="https://github.com/user-attachments/assets/090e93a9-7b65-444d-acda-940c2d62a1f9" />
 
 
 
